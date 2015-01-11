@@ -1,0 +1,4 @@
+check process nginx with pidfile /etc/nginx/logs/nginx.pid # TODO: ensure PID location
+    start program = "/etc/init.d/nginx start"
+    stop program = "/etc/init.d/nginx stop"
+    group nginx

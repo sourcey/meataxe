@@ -1,0 +1,3 @@
+mysql-server-<%= mysql_server_version %> mysql-server/root_password_again password <%= mysql_root_passwd %>
+mysql-server-<%= mysql_server_version %> mysql-server/root_password password <%= mysql_root_passwd %>
+mysql-server-<%= mysql_server_version %> mysql-server/start_on_boot boolean true

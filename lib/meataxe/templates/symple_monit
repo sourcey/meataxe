@@ -1,0 +1,8 @@
+# TODO: Check https, make conditional
+#if failed port 4000 protocol HTTP
+#    request /
+#    with timeout 10 seconds
+#    then restart    
+check process symple-node with pidfile "<%= symple_shared_path %>/pids/symple-node.pid"
+    start program = "/sbin/start symple-node"
+    stop program  = "/sbin/stop symple-node"

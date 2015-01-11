@@ -1,0 +1,19 @@
+description "symple node server"
+
+start on started mountall
+stop on shutdown
+
+script
+  env NODE_ENV=production
+  echo $$ > /home/deploy/symple/shared/pids/symple-node.pid
+  exec /usr/local/bin/node <%= symple_path %>/server/server.js -u deploy >> <%= symple_shared_path %>/log/server.log 2>&1
+end script
+
+#post-start script
+#  PID=`status node | awk '/post-start/ { print $4 }'`
+#  echo $PID > <%= symple_shared_path %>/pids/symple-node.pid
+#end script
+
+post-stop script
+  rm -f <%= symple_shared_path %>/pids/symple-node.pid
+end script
