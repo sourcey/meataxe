@@ -7,9 +7,9 @@ namespace :monit do
       end
     end
   end
-  
+
   desc "Reload Monit"
-  task 'reload' do
+  task :reload do
     on roles(:app), in: :sequence, wait: 5 do
       sudo "monit reload"
     end

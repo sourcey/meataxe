@@ -1,7 +1,7 @@
 Dir.glob(File.join(File.dirname(__FILE__), 'capistrano/tasks/*.cap')).each { |r| load r }
 
 # First try and copy the file `config/deploy/#{full_app_name}/#{from}.erb`
-# to `shared/config/to`
+# to `shared/config/#{to}`
 #
 # If the original source path doesn exist then it will search in:
 # `config/deploy/shared/#{from}.erb`
@@ -21,11 +21,12 @@ def smart_template(from, to=nil)
   end
 end
 
+# Load templates from the local config directory, or fallback to default
+# templates.
 def template_file(name)
-  # if File.exist?((file = "config/deploy/#{fetch(:full_app_name)}/#{name}.erb"))
-  #   return file
-  # els
-  if File.exist?((file = "config/deploy/templates/#{name}.erb"))
+  if File.exist?((file = "config/deploy/shared/#{name}.erb"))
+    return file
+  elsif File.exist?((file = "config/deploy/templates/#{name}.erb"))
     return file
   elsif File.exist?((file = File.join(File.dirname(__FILE__), "capistrano/templates/#{name}.erb")))
     return file
@@ -49,6 +50,6 @@ def host_architecture
 end
 
 def update_repo(repo_url, target_path)
-  run "if [ -d #{target_path} ]; then (cd #{target_path} && git pull); else git clone #{repo_url} #{target_path}; fi"
+  execute "if [ -d #{target_path} ]; then (cd #{target_path} && git pull); else git clone #{repo_url} #{target_path}; fi"
   #run "cd #{target_path} && if [ -d #{target_path} ]; then (git pull); else (cd #{target_path} && cd.. && git clone #{repo_url} #{target_path}); fi"
 end

@@ -1,5 +1,5 @@
 namespace :tasks do
-  desc "Invoke rake task"
+  desc "Invoke a rake task on the server"
   task :invoke do
     on roles(:app) do
       within release_path do
