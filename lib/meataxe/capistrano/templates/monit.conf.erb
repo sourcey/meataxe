@@ -1,0 +1,15 @@
+check process <%= fetch(:full_app_name) %>_puma
+  with pidfile "<%= fetch(:puma_pid) %>"
+  start program = "/usr/bin/sudo -iu <%= fetch(:user) %> /bin/bash -c 'cd <%= current_path %> && <%= SSHKit.config.command_map[:puma] %> -C <%= fetch(:puma_conf) %> --daemon'"
+  stop program = "/usr/bin/sudo -iu <%= fetch(:user) %> /bin/bash -c 'cd <%= current_path %> && <%= SSHKit.config.command_map[:pumactl] %> -S <%= fetch(:puma_state) %> stop'"
+  if mem is greater than 300.0 MB for 1 cycles then restart       # eating up memory?
+  if cpu is greater than 50% for 2 cycles then alert              # send an email to admin
+  if cpu is greater than 80% for 30 cycles then restart           # hung process?
+
+#check process <%= fetch(:full_app_name) %>_delayed_job
+#  with pidfile "<%= fetch(:delayed_job_pid) %>"
+#  start program = "/usr/bin/sudo -iu <%= fetch(:user) %> /bin/bash -c 'cd <%= current_path %> && RAILS_ENV=<%= fetch(:rails_env) %> <%= SSHKit.config.command_map[:bundle] %> exec bin/delayed_job start'"
+#  stop program = "/usr/bin/sudo -iu <%= fetch(:user) %> /bin/bash -c 'cd <%= current_path %> && RAILS_ENV=<%= fetch(:rails_env) %> <%= SSHKit.config.command_map[:bundle] %> exec bin/delayed_job stop'"
+#  if mem is greater than 300.0 MB for 1 cycles then restart       # eating up memory?
+#  if cpu is greater than 50% for 2 cycles then alert              # send an email to admin
+#  if cpu is greater than 80% for 30 cycles then restart           # hung process?

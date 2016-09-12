@@ -1,0 +1,10 @@
+#!/usr/bin/env puma
+
+directory '<%= current_path %>'
+environment '<%= fetch(:rails_env) %>'
+daemonize
+#quiet
+threads <%= fetch(:puma_threads) %>
+pidfile '<%= fetch(:puma_pid) %>'
+state_path '<%= fetch(:puma_state) %>'
+bind '<%= fetch(:puma_bind) %>'

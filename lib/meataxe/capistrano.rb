@@ -22,9 +22,12 @@ def smart_template(from, to=nil)
 end
 
 def template_file(name)
-  if File.exist?((file = "config/deploy/#{fetch(:full_app_name)}/#{name}.erb"))
+  # if File.exist?((file = "config/deploy/#{fetch(:full_app_name)}/#{name}.erb"))
+  #   return file
+  # els
+  if File.exist?((file = "config/deploy/templates/#{name}.erb"))
     return file
-  elsif File.exist?((file = "config/deploy/shared/#{name}.erb"))
+  elsif File.exist?((file = File.join(File.dirname(__FILE__), "capistrano/templates/#{name}.erb")))
     return file
   end
   return nil
