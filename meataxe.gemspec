@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Meataxe::VERSION
   spec.authors       = ["Kam Low"]
   spec.email         = ["hello@sourcey.com"]
-  spec.description   = %q{Meataxe is a collection of killer Capistrano deployment scripts.}
-  spec.summary       = %q{Killer Capistrano deployment scripts.}
+  spec.description   = %q{Meataxe is a collection of killer Capistrano 3 deployment scripts.}
+  spec.summary       = %q{Killer Capistrano 3 deployment scripts.}
   spec.homepage      = "http://github.com/sourcey/meataxe"
   spec.license       = "MIT"
 

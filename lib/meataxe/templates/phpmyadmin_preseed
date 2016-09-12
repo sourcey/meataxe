@@ -1,2 +1,0 @@
-phpmyadmin phpmyadmin/dbconfig-install boolean <%= phpmyadmin_cfg_dbconfig_common %>
-phpmyadmin phpmyadmin/reconfigure-webserver multiselect <%= phpmyadmin_cfg_webserver %>
