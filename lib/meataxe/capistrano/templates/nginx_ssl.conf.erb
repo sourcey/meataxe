@@ -20,7 +20,7 @@ server {
 }
 
 server {
-  listen 443;
+  listen 443 ssl;
   server_name <%= fetch(:server_name) %>;
 
   root <%= current_path %>/public;
@@ -47,6 +47,9 @@ server {
   ssl                   on;
   ssl_certificate       <%= fetch(:ssl_certificate) %>;
   ssl_certificate_key   <%= fetch(:ssl_certificate_key) %>;
+
+  include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+  ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
   # Logging and miscellaneous settings
   access_log            <%= shared_path %>/log/nginx.access.log;

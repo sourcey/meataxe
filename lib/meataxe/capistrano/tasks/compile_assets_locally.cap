@@ -1,5 +1,5 @@
 namespace :deploy do
-  Rake::Task["deploy:assets:precompile"].clear_actions
+  # Rake::Task["deploy:assets:precompile"].clear_actions
 
   desc "Compiles assets locally then rsync to server"
   task :compile_assets_locally do
@@ -12,7 +12,7 @@ namespace :deploy do
         execute "rsync -av --delete ./public/#{asset_prefix}/ #{role.user}@#{role.hostname}:#{shared_path}/public/#{asset_prefix}/;"
         execute "rsync -av --delete ./public/packs/ #{role.user}@#{role.hostname}:#{shared_path}/public/packs/;"
       end
-      sudo "chmod -R 755 #{shared_path}/public/#{asset_prefix}"
+      execute "chmod -R 755 #{shared_path}/public/#{asset_prefix}"
     end
     run_locally do
       execute "rm -rf ./public/#{asset_prefix}"
