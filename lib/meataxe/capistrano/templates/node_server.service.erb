@@ -1,0 +1,22 @@
+[Unit]
+Description=<%= fetch(:full_app_name) %>
+After=network.target
+
+[Service]
+Environment=NODE_ENV=<%= fetch(:node_env, 'production') %> NODE_PORT=3001
+# HOME=/home/<%= fetch(:user) %>
+StandardOutput=file:<%= shared_path %>/log/node_<%= fetch(:node_env, 'production') %>.log
+StandardError=file:<%= shared_path %>/log/node_<%= fetch(:node_env, 'production') %>.log
+User=<%= fetch(:user) %>
+WorkingDirectory=<%= current_path %>/<%= fetch(:node_prefix) %>/
+ExecStart=/usr/bin/node <%= fetch(:node_file) %>
+Restart=on-failure
+
+# limit CPU and RAM quota for our service
+# CPUAccounting=true
+# CPUQuota=10%
+# MemoryAccounting=true
+# MemoryLimit=50M
+
+[Install]
+WantedBy=multi-user.target

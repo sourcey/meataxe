@@ -1,5 +1,5 @@
 <%= fetch(:rails_env) %>:
-  adapter: <%= fetch(:database_adapter) || 'mysql2' %>
+  adapter: <%= fetch(:database_adapter) || 'postgresql' %>
   encoding: <%= fetch(:database_encoding) || 'utf8' %>
   database: <%= "#{fetch(:application)}_#{fetch(:rails_env)}" %>
   pool: <%%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>

@@ -1,3 +1,4 @@
+<% if fetch(:puma_pid) %>
 check process <%= fetch(:full_app_name) %>_puma
   with pidfile "<%= fetch(:puma_pid) %>"
   start program = "/usr/bin/sudo -iu <%= fetch(:user) %> /bin/bash -c 'cd <%= current_path %> && <%= SSHKit.config.command_map[:puma] %> -C <%= fetch(:puma_conf) %> --daemon'"
@@ -5,11 +6,25 @@ check process <%= fetch(:full_app_name) %>_puma
   if mem is greater than 300.0 MB for 1 cycles then restart       # eating up memory?
   if cpu is greater than 50% for 2 cycles then alert              # send an email to admin
   if cpu is greater than 80% for 30 cycles then restart           # hung process?
+<% end %>
 
-#check process <%= fetch(:full_app_name) %>_delayed_job
-#  with pidfile "<%= fetch(:delayed_job_pid) %>"
-#  start program = "/usr/bin/sudo -iu <%= fetch(:user) %> /bin/bash -c 'cd <%= current_path %> && RAILS_ENV=<%= fetch(:rails_env) %> <%= SSHKit.config.command_map[:bundle] %> exec bin/delayed_job start'"
-#  stop program = "/usr/bin/sudo -iu <%= fetch(:user) %> /bin/bash -c 'cd <%= current_path %> && RAILS_ENV=<%= fetch(:rails_env) %> <%= SSHKit.config.command_map[:bundle] %> exec bin/delayed_job stop'"
-#  if mem is greater than 300.0 MB for 1 cycles then restart       # eating up memory?
-#  if cpu is greater than 50% for 2 cycles then alert              # send an email to admin
-#  if cpu is greater than 80% for 30 cycles then restart           # hung process?
+<% if fetch(:delayed_job_pid) %>
+check process <%= fetch(:full_app_name) %>_delayed_job
+  with pidfile "<%= fetch(:delayed_job_pid) %>"
+  start program = "/usr/bin/sudo -iu <%= fetch(:user) %> /bin/bash -c 'cd <%= current_path %> && RAILS_ENV=<%= fetch(:rails_env) %> <%= SSHKit.config.command_map[:bundle] %> exec bin/delayed_job start'"
+  stop program = "/usr/bin/sudo -iu <%= fetch(:user) %> /bin/bash -c 'cd <%= current_path %> && RAILS_ENV=<%= fetch(:rails_env) %> <%= SSHKit.config.command_map[:bundle] %> exec bin/delayed_job stop'"
+  if mem is greater than 300.0 MB for 1 cycles then restart       # eating up memory?
+  if cpu is greater than 50% for 2 cycles then alert              # send an email to admin
+  if cpu is greater than 80% for 30 cycles then restart           # hung process?
+<% end %>
+
+<% if fetch(:node_pid) %>
+# Using systemd to manage node server
+# check process <%= fetch(:full_app_name) %>_node
+#   with pidfile "<%= fetch(:node_pid) %>"
+#   start program = "/etc/init/<%= fetch(:full_app_name) %>_node start"
+#   stop program = "/etc/init/<%= fetch(:full_app_name) %>_node stop"
+#   if mem is greater than 300.0 MB for 1 cycles then restart       # eating up memory?
+#   if cpu is greater than 50% for 2 cycles then alert              # send an email to admin
+#   if cpu is greater than 80% for 30 cycles then restart           # hung process?
+<% end %>

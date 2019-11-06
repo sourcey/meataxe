@@ -5,7 +5,7 @@ include Capistrano::DSL::RbenvInstall
 # Heavily depends on 'capistrano-rbenv' variables:
 # https://github.com/capistrano/rbenv/blob/master/lib/capistrano/tasks/rbenv.rake#L33-49
 # set :rbenv_type               # :user or :system
-# set :rbenv_ruby, '2.0.0-p247' # ruby version
+# set :rbenv_ruby, '2.5.3'      # ruby version
 # set :rbenv_roles, :all        # where rbenv should be installed
 # set :rbenv_path,              # ~/.rbenv or /usr/local/rbenv, depends on :rbenv_type
 # set :rbenv_ruby_dir           # "#{fetch(:rbenv_path)}/versions/#{fetch(:rbenv_ruby)}" }

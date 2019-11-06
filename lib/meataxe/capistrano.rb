@@ -15,7 +15,7 @@ def smart_template(from, to=nil)
   if from_erb_path = template_file(from)
     from_erb = StringIO.new(ERB.new(File.read(from_erb_path)).result(binding))
     upload! from_erb, full_to_path
-    info "copying: #{from_erb} to: #{full_to_path}"
+    info "copying #{from_erb_path} to #{full_to_path}"
   else
     error "error #{from} not found"
   end
