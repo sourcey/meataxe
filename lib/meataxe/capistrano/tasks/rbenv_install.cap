@@ -11,6 +11,13 @@ include Capistrano::DSL::RbenvInstall
 # set :rbenv_ruby_dir           # "#{fetch(:rbenv_path)}/versions/#{fetch(:rbenv_ruby)}" }
 
 namespace :rbenv do
+  desc 'Install ruby dependencies'
+  task :install_dependencies do
+    on roles fetch(:rbenv_roles) do
+      sudo 'apt-get install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm5 libgdbm-dev libsqlite3-dev'
+    end
+  end
+
   desc 'Install rbenv'
   task :install_rbenv do
     on roles fetch(:rbenv_roles) do
@@ -50,6 +57,15 @@ namespace :rbenv do
   task install_bundler: ['rbenv:map_bins'] do
     on roles fetch(:rbenv_roles) do
       next if test :gem, :query, '--quiet --installed --name-matches ^bundler$'
+      execute :gem, :update, '--system'
+      execute :gem, :install, :bundler, '--quiet --no-rdoc --no-ri'
+    end
+  end
+
+  desc 'Update bundler gem'
+  task update_bundler: ['rbenv:map_bins'] do
+    on roles fetch(:rbenv_roles) do
+      execute :gem, :update, '--system'
       execute :gem, :install, :bundler, '--quiet --no-rdoc --no-ri'
     end
   end
